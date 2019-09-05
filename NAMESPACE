@@ -2,6 +2,5 @@
 
 importFrom("grDevices", "dev.off", "pdf")
 importFrom("graphics", "abline", "barplot", "layout", "locator", "par", "plot", "rect", "text")
-
-importFrom(data.table, fread, fwrite, between)
-importFrom(RColorBrewer, brewer.pal, brewer.pal.info)
+importFrom(data.table, between, fread, fwrite)
+importFrom(RColorBrewer, brewer.pal.info, brewer.pal)
