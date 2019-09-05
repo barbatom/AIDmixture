@@ -1,13 +1,13 @@
-Package: AdmixtureTools
+Package: AIDmixture
 Type: Package
-Title: AdmixtureTools allows to easily plot Admixture results and and modify the colours  
+Title: AIDmixture allows to easily plot Admixture results and and modify the colours  
 Version: 0.1.0
 Author: Mario Barbato
 Maintainer: The package maintainer <mario_barbato@hotmail.com>
-Description: With AdmixtureTools you can plot Admixture results, modify the order of the populations,
+Description: With AIDmixture you can plot Admixture results, modify the order of the populations,
     define a new palette of colors and change how the colours are assigned to different clusters at 
     different K, just by clicking on the colours yo uwant to swap.
-License: GPL-2
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 Imports: 
     data.table, RColorBrewer
