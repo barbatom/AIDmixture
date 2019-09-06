@@ -227,7 +227,7 @@ Admixture_ModPlot <- function(
         warning("WARNING: same colour selected, no need to swap.")
       }
     } else {
-      cat("WARNING: coordinates out of reach\n")
+      warning("WARNING: coordinates out of reach.")
     }
   }
 }
