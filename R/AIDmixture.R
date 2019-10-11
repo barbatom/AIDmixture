@@ -6,7 +6,7 @@
 #' @keywords Admixture_colour
 #' @export
 #' @examples
-#' \dontrun{Admixture_ModPlot("Q_file", "MAP_file.map", "Sort_file.txt", 2:2)}
+#' \dontrun{Admixture_ModPlot("inst/extdata/test_data.", fam_file = "inst/extdata/test_data.fam", Kseq = 2:4)}
 
 ColourFile <- function(colourADMX, Kseq, palette){
   
@@ -59,7 +59,7 @@ ColourFile <- function(colourADMX, Kseq, palette){
 #' @keywords Admixture_plot
 #' @export
 #' @examples
-#' \dontrun{Admixture_ModPlot("Q_file", "MAP_file.map", "Sort_file.txt", 2:2)}
+#' \dontrun{Admixture_ModPlot("inst/extdata/test_data.", fam_file = "inst/extdata/test_data.fam", Kseq = 2:4)}
 
 plotAdmixture_MB2 <- function(
   Q_is,
@@ -145,7 +145,7 @@ plotAdmixture_MB2 <- function(
 #' @keywords Admixture_mod
 #' @export
 #' @examples
-#' \dontrun{Admixture_ModPlot("Q_file", "MAP_file.map", "Sort_file.txt", 2:2)}
+#' Admixture_ModPlot("inst/extdata/test_data.", fam_file = "inst/extdata/test_data.fam", Kseq = 2:4)
 
 Admixture_ModPlot <- function(
   Q_file,
@@ -171,12 +171,25 @@ Admixture_ModPlot <- function(
     stop(paste("ERROR: could not open ", fam_file, sep = ""))
   
   # check Sort_file
-  if(is.null(Sort_file)) fwrite(unique(fread(fam_file, select = 1)), paste(Q_file, "sort", sep = ""), col.names = F)
-
+  if(is.null(Sort_file)) {
+    Sort_file = paste(Q_file, "sort", sep = "")
+    fwrite(unique(fread(fam_file, select = 1)), Sort_file, col.names = F)
+  }
+  
   # generate color palette if none is provided
   if(is.null(ColourPalette)){
-    qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
-    ColourPalette = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
+    # qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
+    # ColourPalette = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
+    ColourPalette = c(
+      "#7FC97F","#BEAED4","#FDC086","#FFFF99","#386CB0","#F0027F","#BF5B17","#666666","#1B9E77","#e90c0c",
+      "#7570B3","#55d9f6","#66A61E","#E6AB02","#A6761D","#666666","#A6CEE3","#1F78B4","#B2DF8A","#33A02C",
+      "#FB9A99","#E31A1C","#FDBF6F","#FF7F00","#CAB2D6","#6A3D9A","#FFFF99","#B15928","#FBB4AE","#B3CDE3",
+      "#CCEBC5","#DECBE4","#FED9A6","#FFFFCC","#E5D8BD","#FDDAEC","#F2F2F2","#B3E2CD","#FDCDAC","#CBD5E8",
+      "#F4CAE4","#E6F5C9","#FFF2AE","#F1E2CC","#CCCCCC","#E41A1C","#377EB8","#4DAF4A","#984EA3","#FF7F00",
+      "#FFFF33","#A65628","#F781BF","#999999","#66C2A5","#FC8D62","#8DA0CB","#E78AC3","#A6D854","#FFD92F",
+      "#E5C494","#B3B3B3","#8DD3C7","#FFFFB3","#BEBADA","#FB8072","#80B1D3","#FDB462","#B3DE69","#FCCDE5",
+      "#D9D9D9","#BC80BD","#CCEBC5","#FFED6F"
+      )
   }
     
   ColFile.name <- paste(Q_file, "ADMXcolors", sep = "")
