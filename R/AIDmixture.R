@@ -78,7 +78,7 @@ plotAdmixture_MB2 <- function(
   
   #if(nchar(Map_is) == 0) MAP_is <- paste(Q_is, ".fam", sep = "")
   
-  Fam <- fread(Fam_is, select = 1, col.names = "IDs")
+  Fam <- fread(Fam_is, select = 1, header = F, col.names = "IDs")
   SortL <- fread(Sort_is, header = F)
   
   nR = NROW(Kseq)
