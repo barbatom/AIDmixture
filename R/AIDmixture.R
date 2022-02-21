@@ -54,6 +54,7 @@ ColourFile <- function(colourADMX, Kseq, palette){
 #' @param toPDF If TRUE sends the plot to pdf
 #' @param colorPal The colour palette that will be used to plot
 #' @param margin defines marigns in plot
+#' @param lab.cex modifies labels font size
 #' @param modding If TRUE enters plot modification
 #' @param KtoMod Integer: selects the K to modfy
 #' @keywords Admixture_plot
@@ -70,6 +71,7 @@ plotAdmixture_MB2 <- function(
   toPDF = F,
   colorPal = NULL,
   margin = .05,
+  lab.cex = 1,
   modding = F,
   KtoMod = 0
 ){
@@ -117,7 +119,7 @@ plotAdmixture_MB2 <- function(
     
     is.odd <- if(S %% 2) 1 else 1.1
     
-    text(oldV, 1, adj = c(is.odd, is.odd), FamU$IDs[S], srt = 60, cex = 1-(1-1/nR^0.05), xpd = T)
+    text(oldV, 1, adj = c(is.odd, is.odd), FamU$IDs[S], srt = 60, cex = ifelse(lab.cex == 1, 1-(1-1/nR^0.05), lab.cex), xpd = T)
   }
   
   # ADD EXTRA LINE IF MODDING IS ON
@@ -139,6 +141,7 @@ plotAdmixture_MB2 <- function(
 #' @param Sort_file Order in which the populations should be plotted
 #' @param Kseq Vector of K to be plotted
 #' @param ColourPalette A colour palette
+#' @param lab.cex Modifies font size for labels 
 #' @param mod_plot Logical. TRUE to
 #' @param KtoMod = 3,
 #' @param ToPDF = F
@@ -153,6 +156,7 @@ Admixture_ModPlot <- function(
   Sort_file = NULL,
   Kseq = 2:2,
   ColourPalette = NULL,
+  lab.cex = 1,
   mod_plot = F,
   KtoMod = 3,
   ToPDF = F
@@ -200,7 +204,7 @@ Admixture_ModPlot <- function(
   
   # plot
   plotAdmixture_MB2(Q_is = Q_file, Fam_is = fam_file, Sort_is = Sort_file,
-                    Col_is = ColFile, colorPal = ColourPalette,
+                    Col_is = ColFile, colorPal = ColourPalette, lab.cex = lab.cex,
                     Kseq, modding = mod_plot, KtoMod = KtoMod, toPDF = ToPDF & !mod_plot)
   
   # modding?
