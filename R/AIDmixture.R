@@ -214,7 +214,7 @@ Admixture_ModPlot <- function(
     cols <- as.character(t(as.vector(fread(ColFile.name)[KtoMod, 1:KtoMod])))
     
     # select two colours by mouse clicks
-    cat("Select colours to swap!\n")
+    cat(cyan("Select colours to swap!\n"))
     coords <- locator(2)
     
     # get colours to swap
@@ -225,9 +225,9 @@ Admixture_ModPlot <- function(
       col2 = as.character(ceiling(coords$x[2]))
       
       if(col1 != col2){
-        cat('swap:', ColourPalette[as.numeric(col1)], #"(",col1,")",
+        cat(cyan('swap:', ColourPalette[as.numeric(col1)], #"(",col1,")",
             '&', ColourPalette[as.numeric(col2)]#, "(",col2,")\n"
-            )
+            ))
         
         # swap colours in the colour set and plot again
         cols <- replace(cols, c(which(cols == col1), which(cols == col2)), c(col2, col1))
