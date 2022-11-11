@@ -44,7 +44,7 @@ ColourFile <- function(colourADMX, Kseq, palette){
   }
 }
 
-#' Funtion to generate the Admixture PLot
+#' Function to generate the Admixture PLot
 #'
 #' @param Q_is .Q file stem
 #' @param Fam_is fam file
