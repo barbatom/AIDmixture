@@ -142,8 +142,7 @@ plotAdmixture_MB2 <- function(
 #' @param Kseq Vector of K to be plotted
 #' @param ColourPalette A colour palette
 #' @param lab.cex Modifies font size for labels 
-#' @param mod_plot Logical. TRUE to
-#' @param KtoMod = 3,
+#' @param KtoMod = 0
 #' @param ToPDF = F
 #' @keywords Admixture_mod
 #' @export
@@ -157,26 +156,29 @@ Admixture_ModPlot <- function(
   Kseq = 2:2,
   ColourPalette = NULL,
   lab.cex = 1,
-  mod_plot = F,
-  KtoMod = 3,
+  #mod_plot = F,
+  KtoMod = 0,
   ToPDF = F
 ){
   
+  # mod?
+  mod_plot <- FALSE
+  if(KtoMod > 0) mod_plot = TRUE
   # check input files ------
   
   # Q files
   for(k in Kseq) {
-    if(!file.exists(paste(Q_file, k, ".Q", sep = ""))) stop(paste("ERROR: could not open ", Q_file, k, ".Q", sep = ""))
+    if(!file.exists(paste0(Q_file, k, ".Q"))) stop(paste0("ERROR: could not open ", Q_file, k, ".Q"))
   }
   
   # check Fam file
-  if(is.null(fam_file)) fam_file <- paste(Q_file, "fam", sep = "")
+  if(is.null(fam_file)) fam_file <- paste0(Q_file, "fam")
   if(!file.exists(fam_file)) 
     stop(paste("ERROR: could not open ", fam_file, sep = ""))
   
   # check Sort_file
   if(is.null(Sort_file)) {
-    Sort_file = paste(Q_file, "sort", sep = "")
+    Sort_file = paste0(Q_file, "sort")
     fwrite(unique(fread(fam_file, select = 1)), Sort_file, col.names = F)
   }
   
@@ -196,7 +198,7 @@ Admixture_ModPlot <- function(
       )
   }
     
-  ColFile.name <- paste(Q_file, "ADMXcolors", sep = "")
+  ColFile.name <- paste0(Q_file, "ADMXcolors")
   # checks or creates colour file
   ColourFile(ColFile.name, Kseq, ColourPalette)
   # readS it
