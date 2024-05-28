@@ -56,7 +56,7 @@ ColourFile <- function(colourADMX, Kseq, palette){
 #' @param margin defines marigns in plot
 #' @param lab.cex modifies labels font size
 #' @param modding If TRUE enters plot modification
-#' @param KtoMod Integer: selects the K to modfy
+#' @param KtoMod Integer: selects the K to modify
 #' @keywords Admixture_plot
 #' @export
 #' @examples
