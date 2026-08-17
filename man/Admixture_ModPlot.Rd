@@ -2,33 +2,55 @@
 % Please edit documentation in R/AIDmixture.R
 \name{Admixture_ModPlot}
 \alias{Admixture_ModPlot}
-\title{Main funtion to generate and modify the Admixture PLot}
+\title{Plot and modify ADMIXTURE results}
 \usage{
-Admixture_ModPlot(Q_file, fam_file = NULL, Sort_file = NULL,
-  Kseq = 2:2, ColourPalette = NULL, mod_plot = F, KtoMod = 3,
-  ToPDF = F)
+Admixture_ModPlot(
+  Q_file,
+  fam_file = NULL,
+  Sort_file = NULL,
+  Kseq = 2L,
+  ColourPalette = NULL,
+  lab.cex = 1,
+  KtoMod = 0L,
+  ToPDF = FALSE
+)
 }
 \arguments{
-\item{Q_file}{.Q file stem}
+\item{Q_file}{Character scalar giving the prefix shared by the ADMIXTURE files. For example, \code{"results/run."} expects \code{results/run.2.Q} for K = 2.}
 
-\item{fam_file}{.fam file}
+\item{fam_file}{Path to a PLINK-style fam file. Only its first column is used as the population or group identifier. Defaults to \code{paste0(Q_file, "fam")}.}
 
-\item{Sort_file}{Order in which the populations should be plotted}
+\item{Sort_file}{Optional one-column file defining population plotting order. If omitted, \code{paste0(Q_file, "sort")} is created from the fam file when it does not already exist.}
 
-\item{Kseq}{Vector of K to be plotted}
+\item{Kseq}{Positive integer vector containing the K values to plot.}
 
-\item{ColourPalette}{A colour palette}
+\item{ColourPalette}{Optional character vector of R colours. It must contain at least \code{max(Kseq)} entries. A built-in qualitative palette is used by default.}
 
-\item{mod_plot}{Logical. TRUE to}
+\item{lab.cex}{Positive numeric scalar controlling population-label size.}
 
-\item{KtoMod}{= 3,}
+\item{KtoMod}{Non-negative integer. Set to one of the plotted K values to open the interactive colour-swap panel; use 0 to disable editing.}
 
-\item{ToPDF}{= F}
+\item{ToPDF}{Logical scalar. If \code{TRUE}, write the final plot to \code{paste0(Q_file, "ADMX.pdf")}.}
+}
+\value{
+Invisibly, the path to the persistent \code{ADMXcolors} mapping file.
 }
 \description{
-Main funtion to generate and modify the Admixture PLot
+Plot ADMIXTURE Q-matrix results for one or more values of K. Population ordering can be supplied with a one-column sort file. Colour assignments are persisted in an \code{ADMXcolors} file and can be changed interactively by selecting two colour swatches.
 }
 \examples{
-\dontrun{Admixture_ModPlot("Q_file", "MAP_file.map", "Sort_file.txt", 2:2)}
+\dontrun{
+Admixture_ModPlot(
+  Q_file = "results/run.",
+  fam_file = "results/run.fam",
+  Kseq = 2:6
+)
+
+Admixture_ModPlot(
+  Q_file = "results/run.",
+  fam_file = "results/run.fam",
+  Kseq = 2:6,
+  KtoMod = 4
+)
 }
-\keyword{Admixture_mod}
+}

@@ -1,15 +1,17 @@
 Package: AIDmixture
 Type: Package
-Title: AIDmixture allows to easily plot Admixture results and modify the colours  
-Version: 0.1.0
-Author: Mario Barbato
-Maintainer: The package maintainer <mario_barbato@hotmail.com>
-Description: With AIDmixture you can plot Admixture results, modify the order of the populations,
-    define a new palette of colors and change how the colours are assigned to different clusters at 
-    different K, just by clicking on the colours yo uwant to swap.
+Title: Plot and Reorder ADMIXTURE Results
+Version: 0.2.0
+Authors@R: person("Mario", "Barbato", email = "mario_barbato@hotmail.com", role = c("aut", "cre"))
+Description: Plot ADMIXTURE Q-matrix results across multiple values of K,
+    control population ordering, customize cluster colours, and interactively
+    swap colour assignments while preserving them between plotting sessions.
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
-Imports: 
-    data.table, RColorBrewer
-LazyData: true
-RoxygenNote: 6.1.1
+Imports:
+    data.table
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+URL: https://github.com/barbatom/AIDmixture
+BugReports: https://github.com/barbatom/AIDmixture/issues
