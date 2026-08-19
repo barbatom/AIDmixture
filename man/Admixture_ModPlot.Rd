@@ -2,33 +2,94 @@
 % Please edit documentation in R/AIDmixture.R
 \name{Admixture_ModPlot}
 \alias{Admixture_ModPlot}
-\title{Main funtion to generate and modify the Admixture PLot}
+\title{Plot and modify ADMIXTURE results}
 \usage{
-Admixture_ModPlot(Q_file, fam_file = NULL, Sort_file = NULL,
-  Kseq = 2:2, ColourPalette = NULL, mod_plot = F, KtoMod = 3,
-  ToPDF = F)
+Admixture_ModPlot(
+  Q_file,
+  fam_file = NULL,
+  Sort_file = NULL,
+  Kseq = 2L,
+  ColourPalette = NULL,
+  lab.cex = 1,
+  KtoMod = 0L,
+  ToPDF = FALSE,
+  SortIndividuals = FALSE,
+  AutoMatchColours = TRUE,
+  Labels = "Population",
+  IndividualLabelCex = 0.7
+)
 }
 \arguments{
-\item{Q_file}{.Q file stem}
+\item{Q_file}{Character scalar giving the prefix shared by the ADMIXTURE files. For example, \code{"results/run."} expects \code{results/run.2.Q} for K = 2.}
 
-\item{fam_file}{.fam file}
+\item{fam_file}{Path to a PLINK-style fam file. The first column is used as the population or group identifier. The second column is used as the individual identifier when \code{Labels = "Individual"} or \code{Labels = "Both"}. Defaults to \code{paste0(Q_file, "fam")}.}
 
-\item{Sort_file}{Order in which the populations should be plotted}
+\item{Sort_file}{Optional one-column file defining population plotting order. If omitted, \code{paste0(Q_file, "sort")} is created from the fam file when it does not already exist.}
 
-\item{Kseq}{Vector of K to be plotted}
+\item{Kseq}{Positive integer vector containing the K values to plot.}
 
-\item{ColourPalette}{A colour palette}
+\item{ColourPalette}{Optional character vector of R colours. It must contain at least \code{max(Kseq)} entries. A built-in qualitative palette is used by default.}
 
-\item{mod_plot}{Logical. TRUE to}
+\item{lab.cex}{Positive numeric scalar controlling population-label size.}
 
-\item{KtoMod}{= 3,}
+\item{KtoMod}{Non-negative integer. Set to one of the plotted K values to open the interactive colour-swap panel; use 0 to disable editing.}
 
-\item{ToPDF}{= F}
+\item{ToPDF}{Logical scalar. If \code{TRUE}, write the final plot to \code{paste0(Q_file, "ADMX.pdf")}.}
+
+\item{SortIndividuals}{Logical scalar. If \code{TRUE}, identify the dominant ancestry component for each population at \code{max(Kseq)} from the population mean Q values, then sort individuals within that population from highest to lowest membership in that component. The same individual order is used for every plotted K. Defaults to \code{FALSE}.}
+
+\item{AutoMatchColours}{Logical scalar. If \code{TRUE}, newly generated colour mappings align ancestry components from lower to higher K using individual-level Q profiles. For consecutive K values, the matcher explicitly evaluates one-component splits before applying a maximum-weight assignment. Existing \code{ADMXcolors} rows, including manual swaps, are never overwritten. Defaults to \code{TRUE}.}
+
+\item{Labels}{Character scalar controlling labels below the plot. Use \code{"Population"} (default), \code{"Individual"}, \code{"Both"}, or \code{"None"}. When \code{"Both"} is selected, individual and population IDs are drawn in separate panels so they cannot overlap.}
+
+\item{IndividualLabelCex}{Positive numeric scalar controlling individual-ID label size. Defaults to \code{0.7}.}
+}
+\value{
+Invisibly, the path to the persistent \code{ADMXcolors} mapping file.
 }
 \description{
-Main funtion to generate and modify the Admixture PLot
+Plot ADMIXTURE Q-matrix results for one or more values of K. Population ordering can be supplied with a one-column sort file. Colour assignments are persisted in an \code{ADMXcolors} file and can be matched automatically between K values or changed interactively by selecting two colour swatches.
 }
 \examples{
-\dontrun{Admixture_ModPlot("Q_file", "MAP_file.map", "Sort_file.txt", 2:2)}
+toy_dir <- system.file("extdata", package = "AIDmixture")
+work <- tempfile("AIDmixture-example-")
+dir.create(work)
+invisible(file.copy(
+  list.files(toy_dir, pattern = "^toy[.]", full.names = TRUE),
+  work
+))
+
+Admixture_ModPlot(
+  Q_file = file.path(work, "toy."),
+  fam_file = file.path(work, "toy.fam"),
+  Kseq = 2:4,
+  SortIndividuals = TRUE
+)
+
+unlink(work, recursive = TRUE)
+
+\dontrun{
+# Plot your own ADMIXTURE results.
+Admixture_ModPlot(
+  Q_file = "results/run.",
+  fam_file = "results/run.fam",
+  Kseq = 2:6
+)
+
+# Show both individual IDs and population IDs on separate label tiers.
+Admixture_ModPlot(
+  Q_file = "results/run.",
+  fam_file = "results/run.fam",
+  Kseq = 2:6,
+  Labels = "Both"
+)
+
+# Interactively swap two colours for K = 4.
+Admixture_ModPlot(
+  Q_file = "results/run.",
+  fam_file = "results/run.fam",
+  Kseq = 2:6,
+  KtoMod = 4
+)
 }
-\keyword{Admixture_mod}
+}
